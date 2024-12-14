@@ -1,8 +1,17 @@
-import csv, time
+import csv, time, \
+    multiprocessing as mp
 
 from argparse import ArgumentParser
 
 def parallel_exec(students_csv, fees_csv):
+    process_list = [
+        mp.Process(target = , args = ())
+        for i in range(0, 10, 10)
+    ]
+    payment_days = [
+        None
+        for row in fees_csv
+    ]
     pass
 
 def linear_exec(students_csv, fees_csv):
