@@ -10,4 +10,4 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip3 install Faker
 ```
-Download the [CSV files](https://drive.google.com/file/d/1czV8a6AufbZA6Ane7u2-WJ7JP7gB7Aa-/view?usp=drive_link)
+Download the [CSV files](https://drive.google.com/file/d/1EaGyqbKFRKi3U2j5aN_VqEC_B6BAFR7b/view?usp=sharing)

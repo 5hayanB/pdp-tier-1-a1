@@ -1,3 +1,4 @@
 .venv/
 fees.csv
 students.csv
+csv.tar.zstd
