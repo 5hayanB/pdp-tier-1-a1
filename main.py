@@ -4,25 +4,23 @@ import csv, time, \
 from argparse import ArgumentParser
 
 def parallel_exec(students_csv, fees_csv):
-    process_list = [
-        mp.Process(target = , args = ())
-        for i in range(0, 10, 10)
-    ]
-    payment_days = [
-        None
-        for row in fees_csv
-    ]
+    #process_list = [
+    #    mp.Process(target = , args = ())
+    #    for i in range(0, 10, 10)
+    #]
+    #payment_days = [
+    #    None
+    #    for row in fees_csv
+    #]
     pass
 
 def linear_exec(students_csv, fees_csv):
-    payment_days = []
+    payment_day_counts = {
+        str(i): 0
+        for i in range(1, 31)
+    }
     for row in fees_csv:
-        payment_days.append(row['day'])
-    payment_day_counts = {}
-    for i in range(1, 31):
-        payment_day_counts[str(i)] = 0
-    for day in payment_days:
-        payment_day_counts[day] += 1
+        payment_day_counts[row['day']] += 1
     max = [None, 0]
     for k, v in payment_day_counts.items():
         if max[1] < v:
@@ -54,4 +52,5 @@ if __name__ == '__main__':
         else linear_exec(students_csv, fees_csv)
     t2 = time.time()
     print(f'Most consistent payment date of any month: {result[0]}')
-    print(f'Execution time: {(t2 - t1) / 60} minutes')
+    print(f'Execution time: {t2 - t1} seconds')
+    print('Done')

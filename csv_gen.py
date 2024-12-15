@@ -2,7 +2,7 @@ import csv, random
 
 from faker import Faker
 
-STUDENT_COUNT = 10_000_000
+STUDENT_COUNT = 2_000_000
 MONTHS = (
     'Jan',
     'Feb',
