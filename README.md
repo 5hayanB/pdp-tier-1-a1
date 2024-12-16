@@ -11,3 +11,12 @@ source .venv/bin/activate
 pip3 install Faker
 ```
 Download the [CSV files](https://drive.google.com/file/d/1EaGyqbKFRKi3U2j5aN_VqEC_B6BAFR7b/view?usp=sharing)
+
+###  RRun
+```sh
+# Linear execution
+python3 main.py fees.csv
+
+# Parallel execution
+python3 main.py fees.csv --parallel
+```

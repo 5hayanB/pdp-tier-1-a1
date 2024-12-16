@@ -1,38 +1,14 @@
 import csv, time, \
-    multiprocessing as mp
+    threading as thr
 
 from argparse import ArgumentParser
 
-def parallel_exec(students_csv, fees_csv):
-    #process_list = [
-    #    mp.Process(target = , args = ())
-    #    for i in range(0, 10, 10)
-    #]
-    #payment_days = [
-    #    None
-    #    for row in fees_csv
-    #]
-    pass
-
-def linear_exec(students_csv, fees_csv):
-    payment_day_counts = {
-        str(i): 0
-        for i in range(1, 31)
-    }
-    for row in fees_csv:
-        payment_day_counts[row['day']] += 1
-    max = [None, 0]
-    for k, v in payment_day_counts.items():
-        if max[1] < v:
-            max = [k, v]
-    return max
+def count(start_ndx, end_ndx, count_list, data_list):
+    for i in range(start_ndx, end_ndx):
+        count_list[int(fees_csv[i]['day']) - 1] += 1
 
 if __name__ == '__main__':
     parser = ArgumentParser()
-    parser.add_argument(
-        'students_csv',
-        help = 'Path to students.csv'
-    )
     parser.add_argument(
         'fees_csv',
         help = 'Path to fees.csv'
@@ -43,14 +19,37 @@ if __name__ == '__main__':
         help = 'Run in parallel mode'
     )
     args = parser.parse_args()
-    with open(args.students_csv) as f:
-        students_csv = list(csv.DictReader(f))
+    print('Reading files...')
     with open(args.fees_csv) as f:
         fees_csv = list(csv.DictReader(f))
+    print('Files read successfully')
+    payment_day_counts = [0 for _ in range(30)]
+    print('Executing...')
     t1 = time.time()
-    result = parallel_exec(students_csv, fees_csv) if args.parallel \
-        else linear_exec(students_csv, fees_csv)
+    if args.parallel:
+        steps = 1_000_000
+        thread_list = [
+            thr.Thread(
+                target = count,
+                args = (i, i + steps, payment_day_counts, fees_csv)
+            )
+            for i in range(0, len(fees_csv), steps)
+        ]
+        for process in thread_list:
+            process.start()
+        for process in thread_list:
+            process.join()
+    else:
+        for row in fees_csv:
+            payment_day_counts[int(row['day']) - 1] += 1
     t2 = time.time()
-    print(f'Most consistent payment date of any month: {result[0]}')
-    print(f'Execution time: {t2 - t1} seconds')
-    print('Done')
+    max = [None, 0]
+    for i, e in enumerate(payment_day_counts):
+        if max[1] < e:
+            max = [i + 1, e]
+    print(
+        'Execution completed successfully\n'
+        f'Most consistent payment date of any month: {max[0]}\n'
+        f'Execution time: {t2 - t1} seconds\n'
+        'Done'
+    )
